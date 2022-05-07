@@ -279,7 +279,6 @@ div {
   width: 200vw;
   height: 200vh;
   border-radius: 50%;
-  transition: all 0.8s ease;
 }
 
 .rules {

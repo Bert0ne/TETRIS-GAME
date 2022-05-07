@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = createGrid();
   let squares = Array.from(grid.querySelectorAll('div'))
   const startBtn = document.querySelector('.button')
-  const hamburgerBtn = document.querySelector('.toggler')
+  const howToPlayBtn = document.querySelector('.toggler')
   const menu = document.querySelector('.menu')
   const span = document.getElementsByClassName('close')[0]
   const scoreDisplay = document.querySelector('.score-display')
@@ -247,18 +247,20 @@ document.addEventListener('DOMContentLoaded', () => {
         row.forEach(index => {
           squares[index].style.backgroundImage = 'none'
           squares[index].classList.remove('block2') || squares[index].classList.remove('block')
-
         })
         //splice array
+        console.log(currentIndex, squares.length);
         const squaresRemoved = squares.splice(currentIndex, width)
-        squares = squaresRemoved.concat(squares)
+        console.log(squaresRemoved, squares.length);
+        // squares = squaresRemoved.concat(squares)
+        squares = [...squaresRemoved, ...squares]
         squares.forEach(cell => grid.appendChild(cell))
       }
     }
   }
 
   //Styling eventListeners
-  hamburgerBtn.addEventListener('click', () => {
+  howToPlayBtn.addEventListener('click', () => {
     menu.style.display = 'flex'
   })
   span.addEventListener('click', () => {
