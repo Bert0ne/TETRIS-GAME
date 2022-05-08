@@ -35,6 +35,16 @@ div {
 }
 
 /* some utility classes */
+.displayNone {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.withWide {
+  left: -2rem;
+  padding: 0 !important;
+}
 .t-ucase {
   text-transform: uppercase;
 }

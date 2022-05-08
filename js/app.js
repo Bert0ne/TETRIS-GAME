@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let score = 0
   let lines = 0
   let timerId
+  isGameOver = false;
   let nextRandom = null
   const colors = [
     'url(images/blue_block.png)',
@@ -146,15 +147,36 @@ document.addEventListener('DOMContentLoaded', () => {
       clearInterval(timerId)
       timerId = null
     } else {
+      if(isGameOver) {
+        restartGame()
+      }
       draw()
       timerId = setInterval(moveDown, 1000)
       if(currentIndex == 0) {
         nextRandom = Math.floor(Math.random() * theTetrominoes.length)
-        
       }
       displayShape()
     }
   })
+
+  function restartGame() {
+
+      displayGrid.style.display = 'flex'
+      gameOverGrid.classList.add('displayNone')
+
+    squares.forEach(index => {
+      index.style.backgroundImage = ''
+      index.classList.remove('block')
+      index.classList.remove('block2')
+    })
+
+    score = 0
+    lines = 0
+    scoreDisplay.innerHTML = 0
+    linesDisplay.innerHTML = 0
+    isGameOver = false
+    startBtn.textContent = 'Start / Pause'
+  }
 
   //move left and prevent collisions with shapes moving left
   function moveright() {
@@ -218,14 +240,23 @@ document.addEventListener('DOMContentLoaded', () => {
   //Game Over
   function gameOver() {
     if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
-      scoreDisplay.innerHTML = 'end'
+      isGameOver = true
+      startBtn.textContent = 'RESTART'
+
+      displayGrid.style.display = 'none'
+      gameOverGrid.classList.remove('displayNone')
+
       clearInterval(timerId)
+      timerId = null
     }
   }
 
   //show previous tetromino in scoreDisplay
   const displayWidth = 4
+  const displayGrid = document.querySelector('.previous-grid')
   const displaySquares = document.querySelectorAll('.previous-grid div')
+  const shapesDisplay = document.querySelector('.previous-shape')
+  const gameOverGrid = document.querySelector('.gameOver')
   let displayIndex = 0
 
   const smallTetrominoes = [
