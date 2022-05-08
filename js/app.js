@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let score = 0
   let lines = 0
   let timerId
-  let nextRandom = 0
+  let nextRandom = null
   const colors = [
     'url(images/blue_block.png)',
     'url(images/pink_block.png)',
@@ -133,10 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //move down on loop
   function moveDown() {
-    undraw()
-    currentPosition = currentPosition += width
-    draw()
-    freeze()
+    if(timerId){
+      undraw()
+      currentPosition = currentPosition += width
+      draw()
+      freeze()
+    }
   }
 
   startBtn.addEventListener('click', () => {
@@ -146,31 +148,39 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       draw()
       timerId = setInterval(moveDown, 1000)
-      nextRandom = Math.floor(Math.random() * theTetrominoes.length)
+      if(currentIndex == 0) {
+        nextRandom = Math.floor(Math.random() * theTetrominoes.length)
+        
+      }
       displayShape()
     }
   })
 
   //move left and prevent collisions with shapes moving left
   function moveright() {
-    undraw()
-    const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1)
-    if (!isAtRightEdge) currentPosition += 1
-    if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
-      currentPosition -= 1
+    if(timerId){
+
+      undraw()
+      const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1)
+      if (!isAtRightEdge) currentPosition += 1
+      if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+        currentPosition -= 1
+      }
+      draw()
     }
-    draw()
   }
 
   //move right and prevent collisions with shapes moving right
   function moveleft() {
-    undraw()
-    const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
-    if (!isAtLeftEdge) currentPosition -= 1
-    if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
-      currentPosition += 1
+    if(timerId) {
+      undraw()
+      const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
+      if (!isAtLeftEdge) currentPosition -= 1
+      if (current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+        currentPosition += 1
+      }
+      draw()
     }
-    draw()
   }
 
   //freeze the shape
@@ -194,13 +204,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Rotate the Tetromino
   function rotate() {
-    undraw()
-    currentRotation++
-    if (currentRotation === current.length) {
-      currentRotation = 0
+    if(timerId) {
+      undraw()
+      currentRotation++
+      if (currentRotation === current.length) {
+        currentRotation = 0
+      }
+      current = theTetrominoes[random][currentRotation]
+      draw()
     }
-    current = theTetrominoes[random][currentRotation]
-    draw()
   }
 
   //Game Over
@@ -262,9 +274,16 @@ document.addEventListener('DOMContentLoaded', () => {
   //Styling eventListeners
   howToPlayBtn.addEventListener('click', () => {
     menu.style.display = 'flex'
+    if(timerId) {
+      clearInterval(timerId)
+      timerId = null
+    }
   })
   span.addEventListener('click', () => {
     menu.style.display = 'none'
+    if(!timerId && nextRandom !== null ) {
+        timerId = setInterval(moveDown, 1000)
+    }
   })
 
 })
