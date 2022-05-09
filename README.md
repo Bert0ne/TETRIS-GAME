@@ -11,4 +11,5 @@ A vanilla javascript game
 * Google Fonts
 
 [DEMO](https://bert0ne.github.io/TETRIS-GAME/)
+
 ![](./images/readme.gif)
