@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return grid;
   }
 
-
   //assign functions to keycodes
   function control(e) {
     if (e.keyCode === 39)
@@ -314,5 +313,4 @@ document.addEventListener('DOMContentLoaded', () => {
         timerId = setInterval(moveDown, 1000)
     }
   })
-
 })
