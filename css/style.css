@@ -16,12 +16,12 @@ body {
   margin: auto;
   max-width: 60rem;
   color: #d8edea;
-  background: radial-gradient(
-    circle,
-    rgba(175, 196, 174, 1) 0%,
+  color: #d8edea;
+  /* background-image: linear-gradient(
     rgba(104, 204, 191, 1) 89%,
     rgba(94, 191, 178, 1) 100%
-  );
+  ); */
+  background-image: radial-gradient(circle, rgba(89, 131, 252, 1) 0%, rgba(41, 53, 86, 1) 100%);
 }
 
 header {
